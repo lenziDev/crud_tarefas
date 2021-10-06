@@ -83,24 +83,25 @@ Isto criará um arquivo na pasta migrations no seu app
 		]
 
 - Neste ponto seu projeto deve estar parecido com este:
+
 		projeto_crud_simples/
-		 manage.py
-		 projeto_crud_simples/
-			__init__.py
-			settings.py
-			urls.py
-			asgi.py
-			wsgi.py
-		 tarefas/
-			__init__.py
-			admin.py
-			apps.py
-			migrations/
-			 __init__.py
-			 0001_initial.py
-			models.py
-			tests.py
-			views.py
-			serializers.py
-			urls.py             
+			manage.py
+			projeto_crud_simples/
+				__init__.py
+				settings.py
+				urls.py
+				asgi.py
+				wsgi.py
+			 tarefas/
+				__init__.py
+				admin.py
+				apps.py
+				migrations/
+					__init__.py
+					0001_initial.py
+				models.py
+				tests.py
+				views.py
+				serializers.py
+				urls.py             
  
