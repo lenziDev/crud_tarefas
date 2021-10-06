@@ -37,8 +37,8 @@ CRUD (Create, Read, Update e Delete) simples de tarefas em Python Django, com a 
 		from django.db import models
 
 		class Tarefa(models.Model):
-				nome = models.CharField(max_length=40)
-				status = models.BooleanField(default=False)
+			nome = models.CharField(max_length=40)
+			status = models.BooleanField(default=False)
 
 - Agora iremos criar o arquivo que cria a base de dados, com todas as tabelas padrões do django e o novo model Tarefa.
 
@@ -56,9 +56,9 @@ Isto criará um arquivo na pasta migrations no seu app
 		from tarefas.models import Tarefa
 
 		class TarefaSerializacao(ModelSerializer):
-				class Meta:
-						model = Tarefa
-						fields = '__all__'
+			class Meta:
+				model = Tarefa
+				fields = '__all__'
 
 
 
@@ -79,7 +79,7 @@ Isto criará um arquivo na pasta migrations no seu app
 		from django.urls import path, include
 
 		urlpatterns = [
-				path('', include('tarefas.urls'))
+		        path('', include('tarefas.urls'))
 		]
 
 - Neste ponto seu projeto deve estar parecido com este:
