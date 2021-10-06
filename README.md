@@ -59,11 +59,38 @@ Isto criará um arquivo na pasta migrations no seu app
 			class Meta:
 				model = Tarefa
 				fields = '__all__'
+- Para as ações de CRUD vamos inserir uma configuração de paginação para nossa API, optaremos por 15 items por página, em settings.py na pasta do projeto adicione ao seu código:
+
+		REST_FRAMEWORK = {
+		    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+		    'PAGE_SIZE': 15
+		}
+
+- A primeira ação que vamos inserir na API será a adição de tarefas, usando as views com classes, no arquivos view.py no aplicativo 
+
+		from .models import Tarefa
+		from rest_framework.response import Response
+		from rest_framework.views import APIView
+		from .serializers import TarefaSerializacao
+		from rest_framework.pagination import PageNumberPagination
+		
+		class TarefaAPIListView(APIView):
+		    def post(self, request, format=None):
+			serializer = TarefaSerializacao(data=request.data)
+			if serializer.is_valid():
+			    serializer.save()
+			    response = Response(serializer.data, status=201)
+			    return response
+			return Response(serializer.errors, status=400)
 
 
 
 
-- Crie o arquivo urls.py no aplicativo 'tarefas', para registrar todas as [rotas](https://docs.djangoproject.com/en/3.2/topics/http/urls/) do seu app				
+
+
+
+
+- Crie o arquivo urls.py no aplicativo 'tarefas', para registrar todas as [rotas](https://docs.djangoproject.com/en/3.2/topics/http/urls/) do seu app		
 
 		from django.conf.urls import url
 		from tarefas import views
