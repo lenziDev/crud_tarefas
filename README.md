@@ -66,27 +66,49 @@ Isto criará um arquivo na pasta migrations no seu app
 		    'PAGE_SIZE': 15
 		}
 
-- A primeira ação que vamos inserir na API será a adição de tarefas, usando as views com classes, no arquivos view.py no aplicativo 
+- As duas primeiras ações que vamos inserir na API serão a adição de tarefas e retornar a tarefa em função de sua id, usando as views com classes, no arquivo views.py no aplicativo 
 
-		from .models import Tarefa
-		from rest_framework.response import Response
-		from rest_framework.views import APIView
-		from .serializers import TarefaSerializacao
-		from rest_framework.pagination import PageNumberPagination
-		
+		# Classe da API para mostrar, editar e deletar uma única tarefa
+		class TarefaAPIView(APIView):
+
+		    # Função Mostrar
+		    def get(self, request, id, format=None):
+
+			# O programa tenta encontrar uma tarefa no banco com a id solicitada
+			try:
+			    item = Tarefa.objects.get(pk=id)
+
+			    # Serialização dos dados com o model Tarefa
+			    serializer = TarefaSerializacao(item)
+
+			    # Retorna os valores da tarefa
+			    return Response(serializer.data)
+
+			# Caso não haja uma tarefa com a id fornecida volta a Response status 404, "Not found"
+			except Tarefa.DoesNotExist:
+			    return Response(status=404)
+
+		# Classe da API para mostrar as Tarefas em lista e adicionar novas
 		class TarefaAPIListView(APIView):
+
+		    # Função nova tarefa 
 		    def post(self, request, format=None):
+
+			# Serialização dos dados fornecidos
 			serializer = TarefaSerializacao(data=request.data)
+
+			# Validação dos dados conforme definido no Model
 			if serializer.is_valid():
+
+			    # Caso os dados estiverem corretos ele salva o objeto na Base de Dados
 			    serializer.save()
+
+			    # Retorna a resposta para o Client com o novo objeto inserido
 			    response = Response(serializer.data, status=201)
 			    return response
+
+			# Caso os dados não estejam válidos a API retorna os erros para o Client 
 			return Response(serializer.errors, status=400)
-
-
-
-
-
 
 
 
