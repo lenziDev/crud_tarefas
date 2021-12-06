@@ -78,6 +78,12 @@ REST_FRAMEWORK = {
 - As duas primeiras ações que vamos inserir na API serão a adição de tarefas e retornar a tarefa em função de sua id, usando as views com classes, no arquivo views.py no aplicativo 
 		
 ```diff
+from .models import Tarefa
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.pagination import PageNumberPagination
+from .serializers import TarefaSerializacao
+
 # Classe da API para mostrar, editar e deletar uma única tarefa
 class TarefaAPIView(APIView):
 
